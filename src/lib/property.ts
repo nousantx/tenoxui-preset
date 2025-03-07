@@ -8,6 +8,7 @@ export const defaultProperty: Property = {
   content: 'content',
   isolation: 'isolation',
   order: 'order',
+  z: 'zIndex',
   'outline-offset': {
     property: 'outlineOffset',
     value: '{0}px'
@@ -49,5 +50,21 @@ export const sizingProperty: Property = {
   inset: 'inset',
   gap: 'gap',
   'gap-x': 'columnGap',
-  'gap-y': 'rowGap'
+  'gap-y': 'rowGap',
+  'min-w': 'minWidth',
+  'min-h': 'minHeight',
+  'max-w': 'maxWidth',
+  'max-h': 'maxHeight',
+  mt: 'marginTop',
+  mr: 'marginRight',
+  mb: 'marginBottom',
+  ml: 'marginLeft',
+  mx: 'marginInline',
+  my: 'marginBlock',
+  pt: 'paddingTop',
+  pr: 'paddingRight',
+  pb: 'paddingBottom',
+  pl: 'paddingLeft',
+  py: 'paddingBlock',
+  px: 'paddingInline'
 }

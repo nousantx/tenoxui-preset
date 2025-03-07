@@ -40,22 +40,16 @@ export function createConfig({ sizing = 0.25 }): Config {
 
   return {
     apply: {
-      '@property --tui-shadow': "[syntax]-['*'] [inherits]-false [initial-value]-[0_0_#0000]",
-      '@property --tui-inset-shadow': "[syntax]-['*'] [inherits]-false [initial-value]-[0_0_#0000]",
-      '@property --tui-inset-shadow-color': "[syntax]-['*'] [inherits]-false",
-      '@property --tui-shadow-color': "[syntax]-['*'] [inherits]-false",
-      // ring
-      '@property --tui-ring-shadow': "[syntax]-['*'] [inherits]-false [initial-value]-[0_0_#0000]",
-      '@property --tui-inset-ring-shadow':
-        "[syntax]-['*'] [inherits]-false [initial-value]-[0_0_#0000]",
-      '@property --tui-inset-ring-color': "[syntax]-['*'] [inherits]-false",
-      '@property --tui-ring-color': "[syntax]-['*'] [inherits]-false",
-      '@property --tui-ring-inset': "[syntax]-['*'] [inherits]-false",
-      '@property --tui-ring-offset-width':
-        "[syntax]-['<length>'] [inherits]-false [initial-value]-0px",
-      '@property --tui-ring-offset-color': "[syntax]-['*'] [inherits]-false [initial-value]-#fff",
-      '@property --tui-ring-offset-shadow':
-        "[syntax]-['*'] [inherits]-false [initial-value]-[0_0_#0000]"
+      ':root': `
+        [--tui-inset-shadow]-[0_0_#0000]
+        [--tui-inset-ring-shadow]-[0_0_#0000]
+        [--tui-shadow]-[0_0_#0000]
+        [--tui-ring-shadow]-[0_0_#0000]
+        [--tui-ring-offset-shadow]-[0_0_#0000]
+        [--tui-ring-offset-width]-0px
+        [--tui-ring-inset]-[_]
+        [--tui-ring-offset-color]-#fff
+      `
     },
     property: {
       ...defaultProperty,
