@@ -81,6 +81,12 @@ export function createConfig({ sizing = 0.25 }): Config {
         },
         { ...sizingValues, screen: '100vh' }
       ),
+      size: {
+        property: ['width', 'height'],
+        value: ({ value, unit }) => {
+          return is.number.test(value + unit) ? sizing * Number(value) + 'rem' : value + unit
+        }
+      },
       p: createSizingProperty('padding', {
         x: 'paddingInline',
         y: 'paddingBlock',
@@ -97,6 +103,7 @@ export function createConfig({ sizing = 0.25 }): Config {
         b: 'marginBottom',
         l: 'marginLeft'
       }),
+
       /* background */
       'bg-clip': {
         property: 'backgroundClip',
