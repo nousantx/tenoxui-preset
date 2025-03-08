@@ -657,6 +657,12 @@ export function createConfig({ sizing = 0.25 }): Config {
           return values[value as string] || value
         }
       },
+      duration: {
+        property: 'transitionDuration',
+        value: ({ value = '', unit = '' }) => {
+          return value + (unit || 'ms')
+        }
+      },
       delay: {
         property: 'transitionDelay',
         value: ({ value = '', unit = '' }) => {
