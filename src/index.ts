@@ -3,10 +3,15 @@ import type { GetCSSProperty } from '@tenoxui/types'
 import { is, merge } from '@nousantx/someutils'
 import { colorLib } from './lib/color'
 import { sizingValues } from './lib/sizing'
-import { defaultProperty, sizingProperty as sizingPropertyMap } from './lib/property'
+import {
+  defaultProperty,
+  sizingProperty as sizingPropertyMap,
+  filterProperties
+} from './lib/property'
 import { classes } from './lib/classes'
-export { is, merge } from '@nousantx/someutils'
 
+export { is, merge } from '@nousantx/someutils'
+export { color, colorLib } from './lib/color'
 export function createConfig({ sizing = 0.25 }): Config {
   const computeSizingValue = ({ value = '', unit = '' }) => {
     return is.number.test(value + unit)
@@ -49,11 +54,17 @@ export function createConfig({ sizing = 0.25 }): Config {
         [--tui-ring-offset-width]-0px
         [--tui-ring-inset]-[_]
         [--tui-ring-offset-color]-#fff
+        [--ease-in]-[cubic-bezier(0.4,_0,_1,_1)]
+        [--ease-out]-[cubic-bezier(0,_0,_0.2,_1)]
+        [--ease-in-out]-[cubic-bezier(0.4,_0,_0.2,_1)]
+        [--default-transition-duration]-150ms
+        [--default-transition-timing-function]-[cubic-bezier(0.4,_0,_0.2,_1)]
       `
     },
     property: {
       ...defaultProperty,
       ...sizingProperties,
+      ...filterProperties,
       w: createSizingProperty(
         'width',
         {
@@ -340,7 +351,7 @@ export function createConfig({ sizing = 0.25 }): Config {
       },
       indent: {
         property: 'textIndent',
-        value: ({ value, unit }) => {
+        value: ({ value = '', unit = '' }) => {
           if (value) {
             if (is.number.test(value + unit)) return sizing * Number(value) + 'rem'
             else return value + unit
@@ -591,6 +602,98 @@ export function createConfig({ sizing = 0.25 }): Config {
         value: ({ value = '', unit = '' }) => {
           return value + unit || '1'
         }
+      },
+      transition: {
+        value: null,
+        property: ({ key = '', value = '', unit = '' }) => {
+          if (
+            !value ||
+            key === 'property' ||
+            ['all', 'colors', 'opacity', 'shadow', 'transform'].includes(value)
+          ) {
+            let finalValue
+            if (!value)
+              finalValue =
+                'color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, translate, scale, rotate, filter, -webkit-backdrop-filter, backdrop-filter'
+            else if (value === 'colors')
+              finalValue =
+                'color, background-color, border-color, text-decoration-color, fill, stroke'
+            else if (value === 'shadow') finalValue = 'box-shadow'
+            else if (value === 'transform') finalValue = 'transform, translate, scale, rotate'
+            else finalValue = value
+
+            return `transition-property: ${finalValue}; transition-timing-function: var(--default-transition-timing-function); transition-duration: var(--default-transition-duration)` as GetCSSProperty
+          } else if (key === 'behavior' || ['normal', 'discrete'].includes(value)) {
+            return `transition-behavior: ${
+              value === 'discrete' ? 'allow-discrete' : value
+            }` as GetCSSProperty
+          } else if (key === 'duration' || value === 'initial' || is.number.test(value)) {
+            return `transition-duration: ${
+              value === 'initial' ? 'initial' : value + (unit || 'ms')
+            }` as GetCSSProperty
+          } else if (key === 'delay')
+            return ('transition-delay: ' +
+              (is.time.test(value) ? value : value + (unit || 'ms'))) as GetCSSProperty
+
+          return ('transition: ' + value + unit) as GetCSSProperty
+        }
+      },
+      ease: {
+        property: 'transitionTimingFunction',
+        value: ({ value = '' }) => {
+          const values: Record<string, string> = {
+            in: 'var(--ease-in)',
+            out: 'var(--ease-out)',
+            'in-out': 'var(--ease-in-out)'
+          }
+
+          return values[value as string] || value
+        }
+      },
+      delay: {
+        property: 'transitionDelay',
+        value: ({ value = '', unit = '' }) => {
+          return value + (unit || 'ms')
+        }
+      },
+
+      /* transform properties */
+      move: {
+        property: 'translate',
+        value: ({ value = '', unit = '', secondValue = '', secondUnit = '' }) => {
+          if (!value) return ''
+
+          const isNumber = is.number.test(value + unit)
+          const firstVal = isNumber ? `${sizing * Number(value)}rem` : value + unit
+          const secondVal =
+            secondValue && is.number.test(secondValue + secondUnit)
+              ? `${sizing * Number(secondValue)}rem`
+              : secondValue
+                ? secondValue + secondUnit
+                : firstVal
+
+          return `${firstVal} ${secondVal}`
+        }
+      },
+      'move-x': {
+        property: 'translate',
+        value: ({ value = '', unit = '' }) => {
+          if (is.number.test(value + unit)) {
+            return sizing * Number(value) + 'rem'
+          }
+
+          return `${value + unit} var(--tui-move-y)`
+        }
+      },
+      'move-y': {
+        property: 'translate',
+        value: ({ value = '', unit = '' }) => {
+          if (is.number.test(value + unit)) {
+            return sizing * Number(value) + 'rem'
+          }
+
+          return `var(--tui-move-y) ${value + unit}`
+        }
       }
     },
     aliases: {
@@ -650,6 +753,7 @@ export function createConfig({ sizing = 0.25 }): Config {
         fr: 'minmax(0, 1fr)'
       }
     }),
+
     classes
   } satisfies Config
 }

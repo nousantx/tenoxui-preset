@@ -73,6 +73,80 @@ export const classes: Classes = merge(
       absolute: 'absolute',
       relative: 'relative',
       sticky: 'sticky'
+    },
+    justifyContent: {
+      'justify-start': 'flex-start',
+      'justify-end': 'flex-end',
+      'justify-center': 'center',
+      'justify-between': 'space-between',
+      'justify-around': 'space-around',
+      'justify-evenly': 'space-evenly',
+      'justify-stretch': 'stretch',
+      'justify-baseline': 'baseline',
+      'justify-normal': 'normal'
+    },
+    justifyItems: {
+      'justify-items-start': 'start',
+      'justify-items-end': 'end',
+      'justify-items-center': 'center',
+      'justify-items-stretch': 'stretch',
+      'justify-items-normal': 'normal'
+    },
+    justifySelf: {
+      'justify-self-start': 'start',
+      'justify-self-end': 'end',
+      'justify-self-center': 'center',
+      'justify-self-stretch': 'stretch',
+      'justify-self-auto': 'auto'
+    },
+    alignContent: {
+      'content-start': 'flex-start',
+      'content-end': 'flex-end',
+      'content-center': 'center',
+      'content-between': 'space-between',
+      'content-around': 'space-around',
+      'content-evenly': 'space-evenly',
+      'content-stretch': 'stretch',
+      'content-baseline': 'baseline'
+    },
+    alignItems: {
+      'items-start': 'flex-start',
+      'items-end': 'flex-end',
+      'items-center': 'center',
+      'items-stretch': 'stretch',
+      'items-baseline': 'baseline'
+    },
+    alignSelf: {
+      'self-start': 'flex-start',
+      'self-end': 'flex-end',
+      'self-center': 'center',
+      'self-stretch': 'stretch',
+      'self-baseline': 'baseline',
+      'self-auto': 'auto'
+    },
+    placeContent: {
+      'place-content-start': 'start',
+      'place-content-end': 'end',
+      'place-content-center': 'center',
+      'place-content-between': 'space-between',
+      'place-content-around': 'space-around',
+      'place-content-evenly': 'space-evenly',
+      'place-content-stretch': 'stretch',
+      'place-content-baseline': 'baseline'
+    },
+    placeItems: {
+      'place-items-start': 'start',
+      'place-items-end': 'end',
+      'place-items-center': 'center',
+      'place-items-stretch': 'stretch',
+      'place-items-baseline': 'baseline'
+    },
+    placeSelf: {
+      'place-self-start': 'start',
+      'place-self-end': 'end',
+      'place-self-center': 'center',
+      'place-self-stretch': 'stretch',
+      'place-self-auto': 'auto'
     }
   }
 )
