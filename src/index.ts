@@ -83,7 +83,7 @@ export function createConfig({ sizing = 0.25 }): Config {
       ),
       size: {
         property: ['width', 'height'],
-        value: ({ value, unit }) => {
+        value: ({ value= "", unit="" }) => {
           return is.number.test(value + unit) ? sizing * Number(value) + 'rem' : value + unit
         }
       },
