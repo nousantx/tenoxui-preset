@@ -14,7 +14,7 @@ importers:
     devDependencies:
       '@anyframe/core':
         specifier: ^0.3.1
-        version: 0.3.1(@tenoxui/static@0.5.1)
+        version: 0.3.1(@tenoxui/static@0.5.2)
       '@nousantx/color-generator':
         specifier: ^1.6.0
         version: 1.6.0
@@ -25,8 +25,8 @@ importers:
         specifier: ^0.7.0
         version: 0.7.0
       '@tenoxui/static':
-        specifier: ^0.5.1
-        version: 0.5.1
+        specifier: ^0.5.2
+        version: 0.5.2
       typescript:
         specifier: ^5.7.3
         version: 5.7.3
@@ -296,8 +296,8 @@ packages:
     cpu: [x64]
     os: [win32]
 
-  '@tenoxui/static@0.5.1':
-    resolution: {integrity: sha512-KpH6RE4s9HK7cIQrHk6x7kMqYOaL8QGuV5FatTT/7nEjH5+JzhKwCmJjuun2lX/7YobVBHRsC2hwarPSBJ0Xjg==}
+  '@tenoxui/static@0.5.2':
+    resolution: {integrity: sha512-VtYPbbEmlOmZ7rsJ8nepPvFie0EYp5DxcTF2ulEbBI9VuggMP0pB2GXdqVJKGU60gy4i9uZ8NusOLbo3mVhUbA==}
 
   '@tenoxui/types@0.1.2':
     resolution: {integrity: sha512-Vvmcj5qN9qqEnGjBx3S3fQD3yty2RdMG2qtssQywBdEbX9ast1nuHCe60ML4q3+40Dfz2LMRh4Ny7vzGta5xPA==}
@@ -383,9 +383,9 @@ packages:
 
 snapshots:
 
-  '@anyframe/core@0.3.1(@tenoxui/static@0.5.1)':
+  '@anyframe/core@0.3.1(@tenoxui/static@0.5.2)':
     dependencies:
-      '@tenoxui/static': 0.5.1
+      '@tenoxui/static': 0.5.2
       '@tenoxui/types': 0.1.2
 
   '@esbuild/aix-ppc64@0.24.2':
@@ -528,7 +528,7 @@ snapshots:
   '@rollup/rollup-win32-x64-msvc@4.34.7':
     optional: true
 
-  '@tenoxui/static@0.5.1':
+  '@tenoxui/static@0.5.2':
     dependencies:
       '@tenoxui/types': 0.1.2
 
