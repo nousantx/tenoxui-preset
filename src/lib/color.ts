@@ -1,5 +1,7 @@
 import { generateColors } from '@nousantx/color-generator'
 
+export type ColorFormat = 'hsl' | 'rgb' | 'hwb' | 'lab' | 'lch' | 'oklch'
+
 export const color = {
   red: '#fb2c36',
   orange: '#ff6900',
@@ -25,9 +27,15 @@ export const color = {
   stone: '#79716b'
 }
 
-export const colorLib = (output: any): any =>
+export const colorLib = ({
+  output = 'oklch',
+  colors = {}
+}: {
+  output: ColorFormat
+  colors: { [hex: string]: string }
+}): any =>
   generateColors({
-    color,
+    color: { ...color, ...colors },
     option: {
       format: 'object2',
       output

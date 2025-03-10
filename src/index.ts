@@ -1,18 +1,30 @@
-import type { Config, PropertyParams, Property } from '@tenoxui/static'
+import type { Config as TenoxUIConfig, PropertyParams, Property } from '@tenoxui/static'
 import type { GetCSSProperty } from '@tenoxui/types'
 import { is, merge } from '@nousantx/someutils'
-import { colorLib } from './lib/color'
+import { colorLib, type ColorFormat } from './lib/color'
 import { sizingValues } from './lib/sizing'
 import {
   defaultProperty,
   sizingProperty as sizingPropertyMap,
   filterProperties
 } from './lib/property'
+import { values } from './lib/values'
 import { classes } from './lib/classes'
+
+export interface Config {
+  sizing: number
+  colors: { [key: string]: string }
+  colorVariant: ColorFormat
+}
 
 export { is, merge } from '@nousantx/someutils'
 export { color, colorLib } from './lib/color'
-export function createConfig({ sizing = 0.25 }): Config {
+
+export function createConfig({
+  sizing = 0.25,
+  colors = {},
+  colorVariant = 'oklch'
+}: Partial<Config> = {}): TenoxUIConfig {
   const computeSizingValue = ({ value = '', unit = '' }) => {
     return is.number.test(value + unit)
       ? sizing * Number(value) + (value !== '0' ? 'rem' : '')
@@ -83,7 +95,7 @@ export function createConfig({ sizing = 0.25 }): Config {
       ),
       size: {
         property: ['width', 'height'],
-        value: ({ value= "", unit="" }) => {
+        value: ({ value = '', unit = '' }) => {
           return is.number.test(value + unit) ? sizing * Number(value) + 'rem' : value + unit
         }
       },
@@ -150,11 +162,7 @@ export function createConfig({ sizing = 0.25 }): Config {
               is.color.test(value) ||
               ['inherit', 'current', 'black', 'white', 'transparent'].includes(value)
             ) {
-              if (
-                (value.startsWith('rgb') || value.startsWith('oklch')) &&
-                !value.includes('/') &&
-                value.endsWith(')')
-              ) {
+              if (value.startsWith(colorVariant) && !value.includes('/') && value.endsWith(')')) {
                 return `${value.slice(0, -1)}${
                   secondValue ? ' / ' + secondValue + (secondUnit || '%)') : ')'
                 }`
@@ -415,9 +423,7 @@ export function createConfig({ sizing = 0.25 }): Config {
             ['inherit', 'current', 'black', 'white', 'transparent'].includes(value)
           ) {
             let finalValue =
-              (value.startsWith('rgb') || value.startsWith('oklch')) &&
-              !value.includes('/') &&
-              value.endsWith(')')
+              value.startsWith(colorVariant) && !value.includes('/') && value.endsWith(')')
                 ? `${value.slice(0, -1)}${
                     secondValue ? ' / ' + secondValue + (secondUnit || '%)') : ')'
                   }`
@@ -455,9 +461,7 @@ export function createConfig({ sizing = 0.25 }): Config {
             ['inherit', 'current', 'black', 'white', 'transparent'].includes(value)
           ) {
             let finalValue =
-              (value.startsWith('rgb') || value.startsWith('oklch')) &&
-              !value.includes('/') &&
-              value.endsWith(')')
+              value.startsWith(colorVariant) && !value.includes('/') && value.endsWith(')')
                 ? `${value.slice(0, -1)}${
                     secondValue ? ' / ' + secondValue + (secondUnit || '%)') : ')'
                   }`
@@ -509,9 +513,7 @@ export function createConfig({ sizing = 0.25 }): Config {
           }
 
           let finalValue =
-            (value.startsWith('rgb') || value.startsWith('oklch')) &&
-            !value.includes('/') &&
-            value.endsWith(')')
+            value.startsWith(colorVariant) && !value.includes('/') && value.endsWith(')')
               ? `${value.slice(0, -1)}${
                   secondValue ? ' / ' + secondValue + (secondUnit || '%)') : ')'
                 }`
@@ -536,9 +538,7 @@ export function createConfig({ sizing = 0.25 }): Config {
           if (!value) finalValue = '1px'
           else if (is.color.test(value)) {
             finalValue =
-              (value.startsWith('rgb') || value.startsWith('oklch')) &&
-              !value.includes('/') &&
-              value.endsWith(')')
+              value.startsWith(colorVariant) && !value.includes('/') && value.endsWith(')')
                 ? `${value.slice(0, -1)}${
                     secondValue ? ' / ' + secondValue + (secondUnit || '%)') : ')'
                   }`
@@ -564,9 +564,7 @@ export function createConfig({ sizing = 0.25 }): Config {
           if (!value) finalValue = '1px'
           else if (is.color.test(value)) {
             finalValue =
-              (value.startsWith('rgb') || value.startsWith('oklch')) &&
-              !value.includes('/') &&
-              value.endsWith(')')
+              value.startsWith(colorVariant) && !value.includes('/') && value.endsWith(')')
                 ? `${value.slice(0, -1)}${
                     secondValue ? ' / ' + secondValue + (secondUnit || '%)') : ')'
                   }`
@@ -733,40 +731,13 @@ export function createConfig({ sizing = 0.25 }): Config {
       'row-start-auto': 'row-start-[auto]',
       'row-end-auto': 'row-end-[auto]'
     },
-    values: merge(colorLib('rgb'), {
-      px: '1px',
-      full: '100%',
-      half: '50%',
-      vh: '100vh',
-      svh: '100svh',
-      lvh: '100lvh',
-      dvh: '100dvh',
-      vw: '100vw',
-      svw: '100svw',
-      lvw: '100lvw',
-      dvw: '100dvw',
-      min: 'min-content',
-      max: 'max-content',
-      fit: 'fit-content',
-      order: {
-        first: 'calc(-infinity)',
-        last: 'calc(infinity)',
-        none: '0'
-      },
-      'grid-flow': {
-        'row-dense': 'row dense',
-        'col-dense': 'column dense'
-      },
-      'auto-cols': {
-        fr: 'minmax(0, 1fr)'
-      },
-      'auto-rows': {
-        min: 'min-content',
-        max: 'max-content',
-        fr: 'minmax(0, 1fr)'
-      }
-    }),
-
+    values: merge(
+      colorLib({
+        output: colorVariant,
+        colors
+      }),
+      values
+    ),
     classes
-  } satisfies Config
+  } satisfies TenoxUIConfig
 }
