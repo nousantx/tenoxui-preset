@@ -12,7 +12,7 @@ npm i @tenoxui/static @nousantx/tenoxui-preset
 
 ```javascript
 import { TenoxUI } from '@tenoxui/static'
-import { createConfig } from './dist/index.es.js'
+import { createConfig } from '@nousantx/tenoxui-preset'
 
 const ui = new TenoxUI(
   createConfig({

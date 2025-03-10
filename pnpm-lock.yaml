@@ -14,7 +14,7 @@ importers:
     devDependencies:
       '@anyframe/core':
         specifier: ^0.3.1
-        version: 0.3.1(@tenoxui/static@0.5.2)
+        version: 0.3.1(@tenoxui/static@0.6.1)
       '@nousantx/color-generator':
         specifier: ^1.6.0
         version: 1.6.0
@@ -24,9 +24,12 @@ importers:
       '@nousantx/someutils':
         specifier: ^0.7.0
         version: 0.7.0
+      '@tenoxui/moxie':
+        specifier: ^0.2.0
+        version: 0.2.0
       '@tenoxui/static':
-        specifier: ^0.5.2
-        version: 0.5.2
+        specifier: ^0.6.1
+        version: 0.6.1
       typescript:
         specifier: ^5.7.3
         version: 5.7.3
@@ -296,8 +299,11 @@ packages:
     cpu: [x64]
     os: [win32]
 
-  '@tenoxui/static@0.5.2':
-    resolution: {integrity: sha512-VtYPbbEmlOmZ7rsJ8nepPvFie0EYp5DxcTF2ulEbBI9VuggMP0pB2GXdqVJKGU60gy4i9uZ8NusOLbo3mVhUbA==}
+  '@tenoxui/moxie@0.2.0':
+    resolution: {integrity: sha512-fxo2H57bOA4eVx+gau8kFhLy3swOv1Os3Fs2rFdFkwGd6D9gw60ud7cO/YKlTXD8KRvqqqE01ZiQsxfKb5iamw==}
+
+  '@tenoxui/static@0.6.1':
+    resolution: {integrity: sha512-u+9KDUmhEElfLYQJhSB1rOD+WZMRubktKh6k1SG89hLcfMHjsAAntJbYgKCg5RBHdnsJ3gzIRoQIfJ+j/YtB8g==}
 
   '@tenoxui/types@0.1.2':
     resolution: {integrity: sha512-Vvmcj5qN9qqEnGjBx3S3fQD3yty2RdMG2qtssQywBdEbX9ast1nuHCe60ML4q3+40Dfz2LMRh4Ny7vzGta5xPA==}
@@ -383,9 +389,9 @@ packages:
 
 snapshots:
 
-  '@anyframe/core@0.3.1(@tenoxui/static@0.5.2)':
+  '@anyframe/core@0.3.1(@tenoxui/static@0.6.1)':
     dependencies:
-      '@tenoxui/static': 0.5.2
+      '@tenoxui/static': 0.6.1
       '@tenoxui/types': 0.1.2
 
   '@esbuild/aix-ppc64@0.24.2':
@@ -528,8 +534,13 @@ snapshots:
   '@rollup/rollup-win32-x64-msvc@4.34.7':
     optional: true
 
-  '@tenoxui/static@0.5.2':
+  '@tenoxui/moxie@0.2.0':
     dependencies:
+      '@tenoxui/types': 0.1.2
+
+  '@tenoxui/static@0.6.1':
+    dependencies:
+      '@tenoxui/moxie': 0.2.0
       '@tenoxui/types': 0.1.2
 
   '@tenoxui/types@0.1.2': {}
